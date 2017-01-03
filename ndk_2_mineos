@@ -1,7 +1,9 @@
-#!/usr/bin/env python
+#!~/anaconda2/bin/python
+
+#convert ndk file to mineos ready CMT file.
 
 from sys import argv
-f = open(argv[1])
+f = open(argv[1],'r')
 f = f.read()
 l = f.strip().split('\n')
 
@@ -31,12 +33,9 @@ jday = str(int(month)*12+int(day))
 M_o =  M_o+'e'+M_n
 M_n = '1e'+M_n
 
-out_cmt = open('out_cmt','w')
-out_cmt.write('{} {} {} {} {} {} 
-               {} {} {} {} {} {}
-               {} {} {} {} {} {}
-               {} {} {} {} {} {} {}'
+out_cmt = open(evid+'_cmt','w')
+out_cmt.write('{} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}\n'
                .format(evid,year,jday,hour,min,sec,lat,lon,h,step,halfd,
-                       M_o,M_rr,_M_tt,M_pp,M_rt,M_rp,M_tp,M_n,
-                       strik1,dip1,slip1,strike2,dip2,slip2
+                       M_o,M_rr,M_tt,M_pp,M_rt,M_rp,M_tp,M_n,
+                       strike1,dip1,slip1,strike2,dip2,slip2
                ))
