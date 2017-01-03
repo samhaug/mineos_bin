@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+from sys import argv
+f = open(argv[1])
+f = f.read()
+l = f.strip().split('\n')
+
+evid = l[1].split()[0]
+year = l[0].split()[1].split('/')[0]
+month = l[0].split()[1].split('/')[1]
+day = l[0].split()[1].split('/')[1]
+hour = l[0].split()[2].split(':')[0]
+min = l[0].split()[2].split(':')[1]
+sec = l[0].split()[2].split(':')[2]
+lat = l[0].split()[3]
+lon = l[0].split()[4]
+h = l[2].split()[7]
+step = '1.0'
+halfd = l[1].split()[-1]
+M_o = l[-1].split()[10]
+M_rr = l[-2].split()[1]
+M_tt = l[-2].split()[3]
+M_pp = l[-2].split()[5]
+M_rt = l[-2].split()[7]
+M_rp = l[-2].split()[9]
+M_tp = l[-2].split()[11]
+M_n = l[-2].split()[0]
+strike1,dip1,slip1,strike2,dip2,slip2 = l[-1].split()[11::]
+
+jday = str(int(month)*12+int(day))
+M_o =  M_o+'e'+M_n
+M_n = '1e'+M_n
+
+out_cmt = open('out_cmt','w')
+out_cmt.write('{} {} {} {} {} {} 
+               {} {} {} {} {} {}
+               {} {} {} {} {} {}
+               {} {} {} {} {} {} {}'
+               .format(evid,year,jday,hour,min,sec,lat,lon,h,step,halfd,
+                       M_o,M_rr,_M_tt,M_pp,M_rt,M_rp,M_tp,M_n,
+                       strik1,dip1,slip1,strike2,dip2,slip2
+               ))

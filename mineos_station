@@ -1,0 +1,62 @@
+#!/home/samhaug/anaconda2/bin/python
+import obspy
+from sys import argv
+import numpy as np
+
+st = obspy.read(argv[1])
+
+
+def make_site_str(tr):
+    site_str = '{:^7}{:^9}{:^9}{:^10}{:^10}{:^10}{:^51}{:^5}{:^7}{:^10}{:^10}{:^16}\n'\
+                .format(tr.stats.station,
+                        '2000012',
+                        '-1',
+                        '{0:.4f}'.format(tr.stats.sac['stla']),
+                        '{0:.4f}'.format(tr.stats.sac['stlo']),
+                        '0.0000',
+                        'Nowhere, Nowhere',
+                        '-',
+                        '-',
+                        '0.0000',
+                        '0.0000',
+                        '10/12/06 15:55:44')
+    return site_str
+
+def make_sitechan_str(tr,channel):
+    if channel == 'BHZ':
+       hang = 0.0
+       vang = 0.0
+    if channel == 'BHE':
+       hang = 90.0
+       vang = 90.0
+    if channel == 'BHN':
+       hang = 0.0
+       vang = 90.0
+
+    sitechan_str = '{:^7}{:^9}{:^9}{:^9}{:^9}{:^5}{:^10}{:^7}{:^7}{:^51}{:^16}\n'\
+                .format(tr.stats.station,
+                        channel,
+                        '2000012',
+                        '-1',
+                        '-1',
+                        'n',
+                        '0.0000',
+                         hang,
+                         vang,
+                        '-',
+                        '10/12/06 15:55:44')
+    return sitechan_str
+
+
+sitechan = file('short.sitechan','w')
+site = file('short.site','w')
+
+for tr in st:
+
+    site.write(make_site_str(tr))
+    sitechan.write(make_sitechan_str(tr,'BHZ'))
+    sitechan.write(make_sitechan_str(tr,'BHE'))
+    sitechan.write(make_sitechan_str(tr,'BHN'))
+
+site.close()
+
